@@ -24,10 +24,12 @@ namespace Calculadora.Controllers
         {
             //var auxiliar
             string ecra = visor;
+            string trocavalor = ecra.Substring(1);
 
             //Identificar o valor na variável 'bt'
             switch (bt)
             {
+            
                 //Se entrei aqui, é porque foi selecionado um 'algarismo'
                 case "0":
                 case "1":
@@ -56,16 +58,29 @@ namespace Calculadora.Controllers
                     //Processar o caso da ','
                     if (!visor.Contains(",")) ecra = ecra + bt;
                     break;
-                //Se entrei aqui, é porque foi selecionado um 'algarismo'
+                //Se entrei aqui, é porque foi selecionado um 'operador'
                 case "+":
                 case "-":
                 case "x":
                 case ":":
+                
                     //É a primeira vez que carreguei num destes operadores?
-                    if((bool)Session["primeiraVezOperador"] == true) { // == true é facultativo
+                    if ((bool)Session["primeiraVezOperador"] == true) { // == true é facultativo
 
                     };
                     break;
+                //Apagar o valor dentro do ecrã
+                case "C":
+                    ecra = "";
+                break;
+                //Alterar o valor de positivo para negativo
+                case "+/-":
+                    if (!visor.Contains("-"))
+                        ecra = "-" + visor;
+                    else
+                        ecra = trocavalor;
+                    break;
+
             }
             //prepara o conteúdo a aparecer no VISOR da View
             ViewBag.Ecra = ecra;
